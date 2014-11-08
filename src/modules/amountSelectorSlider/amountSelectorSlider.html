@@ -1,0 +1,6 @@
+<label>Choose your amount:</label>
+<input ng-model="amount" />
+<br /><br />
+<div>
+    <input style="width: 200px;" type="range" ng-model="amount" min="{{ predefinedAmounts[0] }}" max="{{predefinedAmounts[predefinedAmounts.length]}}" />
+</div>
