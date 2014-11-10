@@ -1,6 +1,6 @@
 'use strict';
 
-module.controller("PaymentMethodsController", function ($scope) {
+module.exports = function ($scope) {
     $scope.paymentMethods = [
         {name: 'Visa', type: 'card'},
         {name: 'MasterCard', type: 'card'},
@@ -21,7 +21,7 @@ module.controller("PaymentMethodsController", function ($scope) {
         }
     };
 
-    $scope.deposit= function(){
+    $scope.deposit = function () {
         alert('You have deposited!')
     };
-});
+};

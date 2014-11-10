@@ -1,0 +1,13 @@
+{
+  "name": "paymentPages",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "browserify -t brfs app/app.js -o public/bundle.js",
+    "start": "cd public python -m SimpleHTTPServer 3000",
+    "watch": "watchify -t brfs app/app.js -o public/bundle.js"
+  },
+  "devDependencies": {
+    "brfs": "latest",
+    "watchify": "^2.1.1"
+  }
+}

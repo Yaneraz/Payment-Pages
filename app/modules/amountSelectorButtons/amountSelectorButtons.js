@@ -1,4 +1,9 @@
-module.directive('amountSelectorButtons', function () {
+'use strict';
+
+var fs = require('fs');
+var template = fs.readFileSync(__dirname + '/amountSelectorButtons.html');
+
+module.exports = function () {
     return {
         restrict: 'E',
         transclude: true,
@@ -6,10 +11,10 @@ module.directive('amountSelectorButtons', function () {
             $scope.predefinedAmounts = [25, 50, 100, 200];
             $scope.amount = 0;
 
-            $scope.setAmount = function(newAmount){
+            $scope.setAmount = function (newAmount) {
                 $scope.amount = newAmount;
             };
         },
-        templateUrl: 'modules/amountSelectorButtons/amountSelectorButtons.html'
+        template: template
     };
-});
+};

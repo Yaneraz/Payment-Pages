@@ -3,12 +3,10 @@
 		<a class="list-group-item"
 				ng-repeat="item in paymentMethods"
 				ng-class="{active: item.selected}"
-				ng-href="#/deposit/{{item.name}}"
+				ng-href="#/deposit/{{item.name.toLowerCase()}}"
 				ng-click="selectItem(item)">{{item.name}}</a>
 	</div>
 	<div class="col-xs-9">
 		<ui-view></ui-view>
-		<br />
-		<button ng-click="deposit()">Deposit</button>
 	</div>
 </div>
