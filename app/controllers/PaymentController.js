@@ -20,8 +20,4 @@ module.exports = function ($scope) {
             }
         }
     };
-
-    $scope.deposit = function () {
-        alert('You have deposited!')
-    };
 };
