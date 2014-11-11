@@ -1,11 +1,10 @@
 'use strict';
 
-module.exports = function ($scope) {
-    $scope.paymentMethods = [
-        {name: 'Visa', type: 'card'},
-        {name: 'MasterCard', type: 'card'},
-        {name: 'Ukash', type: 'wallet'}
-    ];
+var pmService = require('../services/PaymentMethodListService');
+pmService = new pmService();
+
+function PaymentController($scope){
+    $scope.paymentMethods = pmService.getPaymentMethods();
 
     $scope.selectItem = function (selectedItem) {
         for (var key in $scope.paymentMethods) {
@@ -20,4 +19,7 @@ module.exports = function ($scope) {
             }
         }
     };
-};
+}
+
+PaymentController.$inject = ['$scope'];
+module.exports = PaymentController;

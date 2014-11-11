@@ -12,12 +12,16 @@ function VisaController($scope) {
 }
 utils.inherits(VisaController, baseController);
 
+// override
 VisaController.prototype.testScope = function () {
     this.$scope.test = 'Hello from VisaController';
 };
 
+// override
 VisaController.prototype.deposit = function(){
     alert('You have deposited from ' + this.name.toUpperCase() +'! amount: ' + this.amount);
 };
+
+VisaController.$inject = ['$scope'];
 
 module.exports = VisaController;

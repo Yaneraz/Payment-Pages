@@ -64,12 +64,11 @@ module.exports = MastercardController;
 },{"../utils":"/Users/roma/Work/git/PaymentPages/app/utils/index.js","./BaseController":"/Users/roma/Work/git/PaymentPages/app/controllers/BaseController.js"}],"/Users/roma/Work/git/PaymentPages/app/controllers/PaymentController.js":[function(require,module,exports){
 'use strict';
 
-module.exports = function ($scope) {
-    $scope.paymentMethods = [
-        {name: 'Visa', type: 'card'},
-        {name: 'MasterCard', type: 'card'},
-        {name: 'Ukash', type: 'wallet'}
-    ];
+var pmService = require('../services/PaymentMethodListService');
+pmService = new pmService();
+
+function PaymentController($scope){
+    $scope.paymentMethods = pmService.getPaymentMethods();
 
     $scope.selectItem = function (selectedItem) {
         for (var key in $scope.paymentMethods) {
@@ -84,13 +83,20 @@ module.exports = function ($scope) {
             }
         }
     };
-};
-},{}],"/Users/roma/Work/git/PaymentPages/app/controllers/UkashController.js":[function(require,module,exports){
+}
+
+PaymentController.$inject = ['$scope'];
+module.exports = PaymentController;
+},{"../services/PaymentMethodListService":"/Users/roma/Work/git/PaymentPages/app/services/PaymentMethodListService.js"}],"/Users/roma/Work/git/PaymentPages/app/controllers/UkashController.js":[function(require,module,exports){
 'use strict';
 
-module.exports = function ($scope, $stateParams) {
+function UkashController($scope, $stateParams) {
     $scope.name = 'Ukash';
-};
+}
+
+UkashController.$inject = ['$scope', '$stateParams'];
+
+module.exports = UkashController;
 },{}],"/Users/roma/Work/git/PaymentPages/app/controllers/VisaController.js":[function(require,module,exports){
 'use strict';
 
@@ -106,13 +112,17 @@ function VisaController($scope) {
 }
 utils.inherits(VisaController, baseController);
 
+// override
 VisaController.prototype.testScope = function () {
     this.$scope.test = 'Hello from VisaController';
 };
 
+// override
 VisaController.prototype.deposit = function(){
     alert('You have deposited from ' + this.name.toUpperCase() +'! amount: ' + this.amount);
 };
+
+VisaController.$inject = ['$scope'];
 
 module.exports = VisaController;
 },{"../utils":"/Users/roma/Work/git/PaymentPages/app/utils/index.js","./BaseController":"/Users/roma/Work/git/PaymentPages/app/controllers/BaseController.js"}],"/Users/roma/Work/git/PaymentPages/app/modules/amountSelectorButtons/amountSelectorButtons.js":[function(require,module,exports){
@@ -120,7 +130,7 @@ module.exports = VisaController;
 'use strict';
 
 
-var template = Buffer("PGxhYmVsPkNob29zZSB5b3VyIGFtb3VudDo8L2xhYmVsPgo8aW5wdXQgbmctbW9kZWw9ImFtb3VudCIgLz4KPGRpdj4KCTxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kZWZhdWx0IGJ0bi1zbSIgbmctY2xpY2s9InNldEFtb3VudChwcmVkZWZpbmVkQW1vdW50c1swXSkiPgoJCXt7IHByZWRlZmluZWRBbW91bnRzWzBdIH19Cgk8L2J1dHRvbj4KCTxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kZWZhdWx0IGJ0bi1zbSIgbmctY2xpY2s9InNldEFtb3VudChwcmVkZWZpbmVkQW1vdW50c1sxXSkiPgoJCXt7IHByZWRlZmluZWRBbW91bnRzWzFdIH19Cgk8L2J1dHRvbj4KCTxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kZWZhdWx0IGJ0bi1zbSIgbmctY2xpY2s9InNldEFtb3VudChwcmVkZWZpbmVkQW1vdW50c1syXSkiPgoJCXt7IHByZWRlZmluZWRBbW91bnRzWzJdIH19Cgk8L2J1dHRvbj4KCTxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kZWZhdWx0IGJ0bi1zbSIgbmctY2xpY2s9InNldEFtb3VudChwcmVkZWZpbmVkQW1vdW50c1szXSkiPgoJCXt7IHByZWRlZmluZWRBbW91bnRzWzNdIH19Cgk8L2J1dHRvbj4KPC9kaXY+","base64");
+var template = Buffer("PGxhYmVsPkNob29zZSB5b3VyIGFtb3VudDo8L2xhYmVsPgo8aW5wdXQgbmctbW9kZWw9ImFtb3VudCIgLz4KPGRpdj4KCTxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kZWZhdWx0IGJ0bi1zbSIgbmctY2xpY2s9InNldEFtb3VudChwcmVkZWZpbmVkQW1vdW50c1swXSkiPgoJCXt7IHByZWRlZmluZWRBbW91bnRzWzBdIHwgY3VycmVuY3kgfX0KCTwvYnV0dG9uPgoJPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJidG4gYnRuLWRlZmF1bHQgYnRuLXNtIiBuZy1jbGljaz0ic2V0QW1vdW50KHByZWRlZmluZWRBbW91bnRzWzFdKSI+CgkJe3sgcHJlZGVmaW5lZEFtb3VudHNbMV0gfCBjdXJyZW5jeSB9fQoJPC9idXR0b24+Cgk8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9ImJ0biBidG4tZGVmYXVsdCBidG4tc20iIG5nLWNsaWNrPSJzZXRBbW91bnQocHJlZGVmaW5lZEFtb3VudHNbMl0pIj4KCQl7eyBwcmVkZWZpbmVkQW1vdW50c1syXSB8IGN1cnJlbmN5IH19Cgk8L2J1dHRvbj4KCTxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kZWZhdWx0IGJ0bi1zbSIgbmctY2xpY2s9InNldEFtb3VudChwcmVkZWZpbmVkQW1vdW50c1szXSkiPgoJCXt7IHByZWRlZmluZWRBbW91bnRzWzNdIH19Cgk8L2J1dHRvbj4KPC9kaXY+","base64");
 
 module.exports = function () {
     return {
@@ -25954,14 +25964,31 @@ var styleDirective = valueFn({
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
+},{}],"/Users/roma/Work/git/PaymentPages/app/services/PaymentMethodListService.js":[function(require,module,exports){
+'use strict';
+
+function PaymentMethodListService($http, $resource) {
+    this.getPaymentMethods = function () {
+        return [
+            {name: 'Visa', type: 'card'},
+            {name: 'MasterCard', type: 'card'},
+            {name: 'Ukash', type: 'wallet'}
+        ];
+    };
+}
+
+PaymentMethodListService.$inject = ['$http', '$resource'];
+
+module.exports = PaymentMethodListService;
 },{}],"/Users/roma/Work/git/PaymentPages/app/utils/index.js":[function(require,module,exports){
 'use strict';
 
 var utils = {};
 utils.inherits = require('./inherits');
+utils.version = require('./version');
 
 module.exports = utils;
-},{"./inherits":"/Users/roma/Work/git/PaymentPages/app/utils/inherits/index.js"}],"/Users/roma/Work/git/PaymentPages/app/utils/inherits/index.js":[function(require,module,exports){
+},{"./inherits":"/Users/roma/Work/git/PaymentPages/app/utils/inherits/index.js","./version":"/Users/roma/Work/git/PaymentPages/app/utils/version/index.js"}],"/Users/roma/Work/git/PaymentPages/app/utils/inherits/index.js":[function(require,module,exports){
 'use strict';
 
 // Add a prototypical inheritance function. Note that this will need es5-sham
@@ -25975,6 +26002,10 @@ module.exports = function inherits(ctor, superCtor) {
         }
     });
 };
+},{}],"/Users/roma/Work/git/PaymentPages/app/utils/version/index.js":[function(require,module,exports){
+'use strict';
+
+module.exports = '0.0.1';
 },{}],"/usr/local/lib/node_modules/watchify/node_modules/browserify/node_modules/buffer/index.js":[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
